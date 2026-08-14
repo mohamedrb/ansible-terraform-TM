@@ -39,18 +39,18 @@ Step: 1:
 AWS Setup + Terraform Init
 
 Aws configure
-<img width="975" height="548" alt="image" src="https://github.com/user-attachments/assets/fb30cd79-6f48-4d1e-9966-18474b480717" />
+<img width="865" height="265" alt="image" src="https://github.com/user-attachments/assets/38fa5947-1bab-4c16-9f1c-0f98b1a9b4b7" />
+
 Project Structure
 terraform-mern/
 │── main.tf
 │── variables.tf
 │── outputs.tf
 │── provider.tf
+<img width="734" height="266" alt="image" src="https://github.com/user-attachments/assets/dba92d94-7787-419c-bcf4-d0d57cf234e7" />
 
-<img width="975" height="548" alt="image" src="https://github.com/user-attachments/assets/68c06f4e-061e-40dd-ba71-f4e29160fa07" />
 
 Provider.tf
-<img width="975" height="548" alt="image" src="https://github.com/user-attachments/assets/0449ddd5-af42-42ac-9e01-9be9aa6987ff" />
 
 
 Step: main.tf
@@ -266,11 +266,6 @@ resource "aws_iam_role" "ec2_role" {
   })
 }
 
-
-
-
-
-
 Outputs.tf
 output "frontend_public_ip" {
   value = aws_instance.frontend.public_ip
@@ -288,11 +283,6 @@ Windows:
 2.	sudo apt update
 3.	sudo apt install ansible -y
 4.	ansible –version
-<img width="975" height="548" alt="image" src="https://github.com/user-attachments/assets/dceaa9e5-3581-4669-bbd2-2400a6b48c4b" />
-
-<img width="975" height="548" alt="image" src="https://github.com/user-attachments/assets/6d84c796-7022-4810-94ba-4a1166523640" />
-
-<img width="975" height="548" alt="image" src="https://github.com/user-attachments/assets/df609d41-50a9-40f7-910d-48eac7444052" />
 
 
 Creating hosts.ini
@@ -348,9 +338,7 @@ Creating db.yml for database mongodb configuration on aws instance in private su
       apt:
         name: mongodb-org
         state: present
-
-
-       
+   
 
     - name: Enable and start MongoDB service
       systemd:
@@ -431,7 +419,7 @@ Creating web.yml for ec2 instance in public subnet
 
   tasks:
 
-    # ================= BASIC SETUP =================
+    #BASIC SETUP 
 
     # - name: Update apt cache
     #   apt:
@@ -454,11 +442,11 @@ Creating web.yml for ec2 instance in public subnet
         name: nodejs
         state: present
 
-    # ================= CLONE CODE =================
+    # CLONE CODE 
 
     - name: Clone Repository
       git:
-        repo: "https://github.com/saiyedin786/TravelMemory_prashant.git"
+        repo: "https://github.com/mohamedrb/TravelMemory_prashant.git"
         dest: "{{ app_dir }}"
         force: yes
 
@@ -469,7 +457,7 @@ Creating web.yml for ec2 instance in public subnet
         group: ubuntu
         recurse: yes
 
-    # ================= PM2 SETUP =================
+    #  PM2 SETUP
 
     - name: Install PM2 globally
       npm:
@@ -481,7 +469,7 @@ Creating web.yml for ec2 instance in public subnet
       set_fact:
         npm_global_bin: "/usr/bin"
 
-    # ================= BACKEND =================
+    # BACKEND
 
     - name: Install Backend Dependencies
       command: npm install
@@ -500,7 +488,7 @@ Creating web.yml for ec2 instance in public subnet
         chdir: "{{ backend_dir }}"
       become_user: ubuntu
 
-    # ================= FRONTEND =================
+    # FRONTEND 
 
     - name: Install Frontend Dependencies
       command: npm install
@@ -538,7 +526,7 @@ Creating web.yml for ec2 instance in public subnet
         chdir: "{{ frontend_dir }}"
       become_user: ubuntu
 
-    # ================= PM2 SAVE =================
+    #  PM2 SAVE
 
     - name: Save PM2 process list
       command: pm2 save
@@ -547,37 +535,19 @@ Creating web.yml for ec2 instance in public subnet
     - name: Setup PM2 startup
       command: pm2 startup systemd -u ubuntu --hp /home/ubuntu
 
-
-
-
-
 Terraform commands:
 1.	terraform init
 2.	terraform plan
 3.	terraform apply
 
-<img width="975" height="548" alt="image" src="https://github.com/user-attachments/assets/d5880196-43a8-40e5-b9ef-fb6857a10b49" />
-<img width="975" height="548" alt="image" src="https://github.com/user-attachments/assets/be5f056e-3e12-4b1f-8feb-2247901ea3bc" />
-<img width="975" height="548" alt="image" src="https://github.com/user-attachments/assets/1f8983d7-b038-4532-9834-237df7b37246" />
-<img width="975" height="548" alt="image" src="https://github.com/user-attachments/assets/e0bdb7b2-e402-40ab-97a5-533abe41645e" />
-<img width="975" height="548" alt="image" src="https://github.com/user-attachments/assets/a3de39f7-1f66-4a90-82ba-c63b3a4095f5" />
-<img width="975" height="548" alt="image" src="https://github.com/user-attachments/assets/a607fb1e-a991-4d47-89bb-eed422188fa9" />
-<img width="975" height="548" alt="image" src="https://github.com/user-attachments/assets/92e843cf-df84-4000-bd3f-303db777f597" />
-<img width="975" height="548" alt="image" src="https://github.com/user-attachments/assets/15c5858d-3a44-4a1c-a498-c0d70413e550" />
-<img width="975" height="548" alt="image" src="https://github.com/user-attachments/assets/815b8511-f678-468d-ab2f-1feaf1113803" />
-<img width="975" height="548" alt="image" src="https://github.com/user-attachments/assets/e85bafd0-8682-4b3e-8b72-7755ffbd52f7" />
-<img width="975" height="548" alt="image" src="https://github.com/user-attachments/assets/7c6e8f48-a16b-4f7b-808b-ebe8a8e2c721" />
 
 Connecting to ec2 instance in public subnet and configuration as a bastion host
-<img width="975" height="548" alt="image" src="https://github.com/user-attachments/assets/5ce555e9-e1f9-452e-abfc-bbe9a87d5cb7" />
 
 Copying the content of mern-key.pem private key into the bastion host
 Touch mern-key.pm
-<img width="975" height="548" alt="image" src="https://github.com/user-attachments/assets/ba71f385-43ea-441a-82c6-35c5edefba91" />
 
 Connecting from bastion host to ec2 instance in private subnet
 
-<img width="975" height="548" alt="image" src="https://github.com/user-attachments/assets/7feb76f7-5c2b-4f04-a130-1c605aeca158" />
 
 Now my ansible files are
 Db.yml – this will create install mongodb in ec2 instance in private subnet
@@ -587,31 +557,5 @@ Ansible commands
 1.	ansible-playbook -i hosts.ini db.yml
 2.	ansible-playbook -i hosts.ini web.yml
 
-<img width="975" height="548" alt="image" src="https://github.com/user-attachments/assets/8d6e87da-96d6-48f6-babc-45aa8a5cf7f2" />
-
-<img width="975" height="548" alt="image" src="https://github.com/user-attachments/assets/d5f5d3b6-2bea-4594-badb-6562f0d68228" />
-
-<img width="975" height="548" alt="image" src="https://github.com/user-attachments/assets/a1f7753e-504c-4acd-a5a5-f6cb96bb8a0d" />
-
-<img width="975" height="548" alt="image" src="https://github.com/user-attachments/assets/122651be-bb71-4865-895a-dd9d68e9bb3b" />
-
 Testing from the browser:
 http://3.110.83.171:3000/
-<img width="975" height="548" alt="image" src="https://github.com/user-attachments/assets/85b75046-d5f6-4d35-b3ca-8da58a8a89b1" />
-<img width="975" height="548" alt="image" src="https://github.com/user-attachments/assets/1126c76e-4099-4a15-a2b4-d1c02e17a9dd" />
-
-<img width="975" height="548" alt="image" src="https://github.com/user-attachments/assets/3d9d2146-4f40-4175-a3b3-f5beebad143d" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
